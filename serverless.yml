@@ -1,0 +1,46 @@
+
+
+service: first-serverless
+
+
+
+provider:
+  name: aws
+  runtime: nodejs6.10
+  iamRoleStatements:
+    - Effect: "Allow"
+      Action:
+        - "s3:*"
+      Resource: "arn:aws:s3:::gurjeetsingh-tech91/*"
+      
+    - Effect: Allow
+      Action:
+       - dynamodb:DescribeTable
+       - dynamodb:Query
+       - dynamodb:Scan
+       - dynamodb:GetItem
+       - dynamodb:PutItem
+       - dynamodb:UpdateItem
+       - dynamodb:DeleteItem
+      Resource: "arn:aws:dynamodb:us-east-1:*:*"
+
+
+
+
+
+functions:
+  filesaveinfo:
+    handler: handler.filesaveinfo
+    events:
+     - s3:
+         bucket: gurjeetsingh-tech91
+         event: s3:ObjectCreated:*
+         
+  filedelinfo:
+    handler: handler.filedelinfo
+    events:
+     - s3:
+         bucket: gurjeetsingh-tech91
+         event: s3:ObjectRemoved:*
+
+
