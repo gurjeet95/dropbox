@@ -10,7 +10,7 @@ provider:
   iamRoleStatements:
     - Effect: "Allow"
       Action:
-        - "s3:*"
+       - "s3:*"
       Resource: "arn:aws:s3:::gurjeetsingh-tech91/*"
       
     - Effect: Allow
@@ -42,5 +42,7 @@ functions:
      - s3:
          bucket: gurjeetsingh-tech91
          event: s3:ObjectRemoved:*
-
+  
+  
+    
 
