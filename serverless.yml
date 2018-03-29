@@ -13,6 +13,12 @@ provider:
        - "s3:*"
       Resource: "arn:aws:s3:::gurjeetsingh-tech91/*"
       
+    - Effect: "Allow"
+      Action:
+        - lambda:InvokeFunction
+        - lambda:InvokeAsync
+      Resource: "*"  
+      
     - Effect: Allow
       Action:
        - dynamodb:DescribeTable
@@ -42,6 +48,30 @@ functions:
      - s3:
          bucket: gurjeetsingh-tech91
          event: s3:ObjectRemoved:*
+         
+  
+  sendsms:
+    handler: handler.sendsms
+    
+    
+resources:
+ Resources:
+  RecipesDynamoDbTable:
+   Type: 'AWS::DynamoDB::Table'
+   DeletionPolicy: Retain
+   Properties:
+    AttributeDefinitions:
+     -
+      AttributeName: id
+      AttributeType: S
+    KeySchema:
+     -
+      AttributeName: id
+      KeyType: HASH
+    ProvisionedThroughput:
+     ReadCapacityUnits: 1
+     WriteCapacityUnits: 1
+    TableName: 'dropbox'
   
   
     
